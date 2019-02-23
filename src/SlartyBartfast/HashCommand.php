@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace SlartyBartfast;
 
@@ -33,6 +34,8 @@ class HashCommand extends Command
             $output->writeln('Empty output');
             return 2;
         }
+
+        return 0;
     }
 
     protected function configure()

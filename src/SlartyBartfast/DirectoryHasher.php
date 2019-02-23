@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace SlartyBartfast;
 
@@ -24,7 +25,9 @@ class DirectoryHasher
         $currentDirectory = getcwd();
 
         if (!file_exists($this->root) || !is_dir($this->root)) {
-            throw new \InvalidArgumentException('Provided root directory does not exist');
+            throw new \InvalidArgumentException(
+                'Provided root directory does not exist'
+            );
         }
 
         chdir($this->root);
@@ -52,7 +55,9 @@ class DirectoryHasher
         $directories = array_map('escapeshellarg', $this->directories);
 
         $directoriesString = implode(' ', $directories);
-        $result            = trim(`git ls-files -s $directoriesString | git hash-object --stdin`);
+        $result            = shell_exec(
+            "git ls-files -s $directoriesString | git hash-object --stdin"
+        );
         chdir($currentDirectory);
         return $result;
     }
