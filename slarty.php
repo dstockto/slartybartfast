@@ -3,8 +3,8 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use SlartyBartifact\HashCommand;
-use SlartyBartifact\TimeCommand;
+use SlartyBartfast\HashCommand;
+use SlartyBartfast\TimeCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
 

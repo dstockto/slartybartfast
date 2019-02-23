@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bac8f35129bb4e94a3040030de82ff98",
+    "content-hash": "fab5f5509ee9a4eed82bdf0130b144ce",
     "packages": [
         {
             "name": "roave/security-advisories",

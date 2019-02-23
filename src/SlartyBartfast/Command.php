@@ -1,6 +1,6 @@
 <?php
 
-namespace SlartyBartifact;
+namespace SlartyBartfast;
 
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;

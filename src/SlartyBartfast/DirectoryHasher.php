@@ -1,6 +1,6 @@
 <?php
 
-namespace SlartyBartifact;
+namespace SlartyBartfast;
 
 class DirectoryHasher
 {
