@@ -12,6 +12,7 @@ class TimeCommand extends Command
     public function configure()
     {
         $this->setName('greet')
+            ->setHidden(true)
             ->setDescription('Greet a user based on the time of the day')
             ->setHelp('This command allows you to greet a user based on the time of day')
             ->addArgument('username', InputArgument::REQUIRED, 'The username of the user.');
