@@ -1,4 +1,6 @@
 {
+    "name": "dstockto/slartibartfast",
+    "license": "MIT",
     "require": {
         "roave/security-advisories": "dev-master",
         "symfony/console": "^4.2"
