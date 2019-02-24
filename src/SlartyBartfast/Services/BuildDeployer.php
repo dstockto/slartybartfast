@@ -73,7 +73,7 @@ class BuildDeployer
         fclose($file);
 
         // unzip it
-        shell_exec("unzip -f {$namer->getArtifactName()}");
+        shell_exec("unzip -uof {$namer->getArtifactName()}");
 
         unlink($namer->getArtifactName());
 
