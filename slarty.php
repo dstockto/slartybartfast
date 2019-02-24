@@ -30,14 +30,14 @@ $commandLoader = new FactoryCommandLoader(
         'hash-application' => function() {
             return new HashApplicationCommand();
         },
+        'should-build' => function() {
+            return new ShouldBuildApplicationsCommand();
+        },
         'do-builds' => function() {
             return new DoBuildsCommand();
         },
         'do-deploys' => function() {
             return new DoDeploysCommand();
-        },
-        'should-build' => function() {
-            return new ShouldBuildApplicationsCommand();
         },
     ]
 );

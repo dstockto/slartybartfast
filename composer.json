@@ -4,7 +4,9 @@
     "require": {
         "roave/security-advisories": "dev-master",
         "symfony/console": "^4.2",
-        "tightenco/collect": "v5.7.26"
+        "tightenco/collect": "v5.7.26",
+        "league/flysystem": "^1.0",
+        "league/flysystem-aws-s3-v3": "^1.0"
     },
     "autoload": {
         "psr-4": {
