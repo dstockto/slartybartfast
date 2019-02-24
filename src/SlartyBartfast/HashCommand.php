@@ -11,8 +11,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class HashCommand extends Command
 {
-    const EMPTY_HASH = 'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391';
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $root        = $input->getArgument('root');
@@ -29,12 +27,6 @@ class HashCommand extends Command
         }
 
         $io->text($hash);
-
-        if ($hash === self::EMPTY_HASH) {
-            $output->writeln('Empty output');
-            return 2;
-        }
-
         return 0;
     }
 
