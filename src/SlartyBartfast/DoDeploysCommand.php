@@ -17,8 +17,6 @@ class DoDeploysCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Implement Do Deploys');
-
         $config = $input->getOption('config');
 
         if (!file_exists($config)) {
