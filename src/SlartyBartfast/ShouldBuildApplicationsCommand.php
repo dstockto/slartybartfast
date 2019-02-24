@@ -59,7 +59,7 @@ class ShouldBuildApplicationsCommand extends Command
             ->setHelp('Determines if application artifact exists in S3 or should be built')
             ->addOption(
                 'config',
-                null,
+                'c',
                 InputOption::VALUE_REQUIRED,
                 'artifacts.json location',
                 './artifacts.json'
