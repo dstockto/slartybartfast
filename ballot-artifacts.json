@@ -1,0 +1,43 @@
+{
+  "application": "ballottrax",
+  "root_directory": "/Users/dstockton/Projects/ballottrax_vm/ballottrax_web",
+  "artifacts": [
+    {
+      "name": "account-react",
+      "directories": ["account-beta"],
+      "command": "ant ui-build-account",
+      "output_directory": "./account-beta/build",
+      "deploy_location": "./account-beta/build",
+      "artifact_prefix": "account-react",
+      "artifact_treatment": "zip"
+    },
+    {
+      "name": "account-angular",
+      "directories": ["module/AccountUi", "module/CommonUi"],
+      "command": "ant ui-build-account",
+      "output_directory": "./build??",
+      "deploy_location": "??",
+      "artifact_prefix": "account-angular",
+      "artifact_treatment": "zip??"
+    },
+    {
+      "name": "admin-angular",
+      "directories": ["module/AdminUi", "module/CommonUi"],
+      "command": "ant ui-build-admin",
+      "output_directory": "./build??",
+      "deploy_location": "./account-beta/build??",
+      "artifact_prefix": "admin-angular",
+      "artifact_treatment": "zip??"
+    },
+    {
+      "name": "voter-react",
+      "directories": ["voterUI"],
+      "command": "ant ui-build-admin",
+      "output_directory": "./build??",
+      "deploy_location": "./account-beta/build??",
+      "artifact_prefix": "voter-react",
+      "artifact_treatment": "zip??"
+    }
+  ]
+}
+
