@@ -3,23 +3,90 @@ declare(strict_types=1);
 
 namespace SlartyBartfast;
 
+use SlartyBartfast\Model\ApplicationModel;
+use SlartyBartfast\Services\AppBuilder;
+use SlartyBartfast\Services\ArtifactConfig;
+use SlartyBartfast\Services\ArtifactNamer;
+use SlartyBartfast\Services\BuildSaver;
+use SlartyBartfast\Services\FlySystemFactory;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DoBuildsCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Implement do builds');
+        $config = $input->getOption('config');
 
-        // load config
-        // load applications
-        // determine which builds are needed
-        // do builds that are needed
-        // store artifacts in storage location
-        // output progress and results
+        if (!file_exists($config)) {
+            throw new \RuntimeException('Provided artifacts.json file does not exist');
+        }
+
+        $io                = new SymfonyStyle($input, $output);
+        $applicationConfig = new ArtifactConfig($input->getOption('config'));
+
+        $filesystem = FlySystemFactory::getAdapter(
+            $applicationConfig->getRepositoryConfig()
+        );
+
+        // Get application list (filtered)
+        $applications = $applicationConfig->getApplicationList($input->getOption('filter'));
+
+        $force = $input->getOption('force');
+
+        $builders = $applications->map(
+            function (ApplicationModel $app) use ($filesystem, $force) {
+                return new AppBuilder($app, $filesystem, $force);
+            }
+        );
+
+        $sections = [];
+
+        $builders->each(
+            function (AppBuilder $builder) use ($io, $output, &$sections) {
+                $io->writeln(
+                    [
+                        'Doing build for ' . $builder->getApplicationName()
+                        . ' - ' . ($builder->shouldBuild() ? 'YES' : 'NO'),
+                    ]
+                );
+            }
+        );
+
+        $progressSection = $output->section();
+
+        $requiredBuilders = $builders->filter(
+            function (AppBuilder $builder) {
+                return $builder->shouldBuild();
+            }
+        );
+
+        $progress = new ProgressBar($progressSection);
+
+        $neededBuildCount = $requiredBuilders->count();
+
+        $progress->setMaxSteps($neededBuildCount);
+        $requiredBuilders->each(
+            function (AppBuilder $builder) use ($filesystem, $output, $input, $progress) {
+                $success = $builder->doBuild($input, $output);
+                $progress->advance();
+
+                if (!$success) {
+                    throw new \RuntimeException('Build failure on ' . $builder->getApplicationName());
+                }
+
+                $saver = new BuildSaver($builder->getApplication(), $filesystem);
+                $saver->saveBuild();
+            }
+        );
+
+        $progress->finish();
     }
 
     protected function configure()
@@ -43,7 +110,7 @@ class DoBuildsCommand extends Command
             ->addOption(
                 'force',
                 null,
-                InputOption::VALUE_OPTIONAL,
+                InputOption::VALUE_NONE,
                 'Force the build and storage even if it already exists'
             );
     }
