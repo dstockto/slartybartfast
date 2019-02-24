@@ -1,0 +1,33 @@
+{
+  "application": "Slarty Bartfast",
+  "root_directory": "__DIR__",
+  "artifacts": [
+    {
+      "name": "source",
+      "directories": ["src"],
+      "command": "ant ui-build-account",
+      "output_directory": "./account-beta/build",
+      "deploy_location": "./account-beta/build",
+      "artifact_prefix": "slarty-source",
+      "artifact_treatment": "zip"
+    },
+    {
+      "name": "Services",
+      "directories": ["src/SlartyBartfast/Services"],
+      "command": "ant ui-build-account",
+      "output_directory": "./account-beta/build",
+      "deploy_location": "./account-beta/build",
+      "artifact_prefix": "slarty-services",
+      "artifact_treatment": "zip"
+    },
+    {
+      "name": "Models",
+      "directories": ["src/SlartyBartfast/Model"],
+      "command": "ant ui-build-account",
+      "output_directory": "./account-beta/build",
+      "deploy_location": "./account-beta/build",
+      "artifact_prefix": "slarty-models",
+      "artifact_treatment": "zip"
+    }
+  ]
+}
