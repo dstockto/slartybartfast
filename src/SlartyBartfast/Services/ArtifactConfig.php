@@ -39,7 +39,13 @@ class ArtifactConfig
     private function loadConfig(): void
     {
         $json = file_get_contents($this->configPath);
-        $this->configuration = json_decode($json, true);
+        $configuration = \json_decode($json, true);
+
+        if ($configuration === null) {
+            throw new \RuntimeException('JSON Configuration was malformed');
+        }
+
+        $this->configuration = $configuration;
         if ($this->configuration['root_directory'] === '__DIR__') {
             $this->configuration['root_directory'] = dirname(realpath($this->configPath));
         }
