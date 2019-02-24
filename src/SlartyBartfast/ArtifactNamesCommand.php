@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace SlartyBartfast;
 
 use SlartyBartfast\Model\ApplicationModel;
 use SlartyBartfast\Services\ArtifactConfig;
 use SlartyBartfast\Services\ArtifactNamer;
+use SlartyBartfast\Services\DirectoryHasher;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
