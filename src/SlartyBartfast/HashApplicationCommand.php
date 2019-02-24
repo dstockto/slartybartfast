@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace SlartyBartfast;
 
+use SlartyBartfast\Model\ApplicationModel;
+use SlartyBartfast\Services\ArtifactConfig;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class HashApplicationCommand extends Command
 {
@@ -18,16 +21,37 @@ class HashApplicationCommand extends Command
             throw new \RuntimeException('Provided artifacts.json file does not exist');
         }
 
-        // load configuration (make a class)
+        $io                = new SymfonyStyle($input, $output);
+        $applicationConfig = new ArtifactConfig($input->getOption('config'));
 
-        // get application configurations from configuration object
+        // Get application list (filtered)
+        $applications = $applicationConfig->getApplicationList($input->getOption('filter'));
 
-        // filter configurations if filters are provided
+        if ($applications->isEmpty()) {
+            $io->error('No applications match provided filter');
+            return 1;
+        }
 
-        // loop over remaining configurations
+        // Loop and get hash
+        $hashes = $applications->map(
+            function (ApplicationModel $app) {
+                return [
+                    $app->getName(),
+                    (new DirectoryHasher(
+                        $app->getRoot(),
+                        $app->getDirectories()
+                    ))->getHash(),
+                ];
+            }
+        );
 
-        // dump table of application name and hashes
+        // Dump table of application names and hashes
+        $io->table(
+            ['Application', 'Hash'],
+            $hashes->all()
+        );
 
+        return 0;
     }
 
     protected function configure()
