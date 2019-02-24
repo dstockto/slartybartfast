@@ -52,6 +52,8 @@ class ArtifactNamesCommand extends Command
                 }
             )->all()
         );
+
+        return 0;
     }
 
     protected function configure()
