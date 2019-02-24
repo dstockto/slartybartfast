@@ -3,7 +3,8 @@
     "license": "MIT",
     "require": {
         "roave/security-advisories": "dev-master",
-        "symfony/console": "^4.2"
+        "symfony/console": "^4.2",
+        "tightenco/collect": "v5.7.26"
     },
     "autoload": {
         "psr-4": {
