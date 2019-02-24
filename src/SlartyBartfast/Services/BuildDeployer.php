@@ -72,10 +72,16 @@ class BuildDeployer
         fwrite($file, $readStream['contents']);
         fclose($file);
 
+        $output->writeln([' - Downloaded artifact']);
+
         // unzip it
         shell_exec("unzip -uof {$namer->getArtifactName()}");
 
+        $output->writeln([' - Unzipped artifact']);
+
         unlink($namer->getArtifactName());
+
+        $output->writeln([' - Deleted (zip) artifact']);
 
         chdir($currentDir);
     }
