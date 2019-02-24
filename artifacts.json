@@ -36,7 +36,7 @@
       "name": "AMess",
       "directories": ["."],
       "command": "make aMess",
-      "output_directory": "build/",
+      "output_directory": "build/mess",
       "deploy_location": "./account-beta/build",
       "artifact_prefix": "slarty-mess"
     }
