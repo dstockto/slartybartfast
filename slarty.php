@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+use SlartyBartfast\ArtifactNamesCommand;
 use SlartyBartfast\DoBuildsCommand;
 use SlartyBartfast\DoDeploysCommand;
 use SlartyBartfast\HashApplicationCommand;
@@ -21,6 +22,9 @@ $commandLoader = new FactoryCommandLoader(
         'hash' => function () {
             return new HashCommand();
         },
+        'artifact-names' => function() {
+            return new ArtifactNamesCommand();
+        },
         'hash-application' => function() {
             return new HashApplicationCommand();
         },
@@ -32,7 +36,7 @@ $commandLoader = new FactoryCommandLoader(
         },
         'should-build' => function() {
             return new ShouldBuildApplicationsCommand();
-        }
+        },
     ]
 );
 
