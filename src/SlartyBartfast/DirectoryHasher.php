@@ -5,6 +5,8 @@ namespace SlartyBartfast;
 
 class DirectoryHasher
 {
+    const EMPTY_HASH = 'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391';
+
     private $root;
     private $directories = [];
 
@@ -55,10 +57,17 @@ class DirectoryHasher
         $directories = array_map('escapeshellarg', $this->directories);
 
         $directoriesString = implode(' ', $directories);
-        $result            = shell_exec(
-            "git ls-files -s $directoriesString | git hash-object --stdin"
-        );
+
+        $cmd    = "git ls-files -s $directoriesString | git hash-object --stdin";
+        $result = trim(shell_exec($cmd));
         chdir($currentDirectory);
+        if ($result === self::EMPTY_HASH) {
+            throw new \RuntimeException(
+                "Provided directories are empty - check capitalization\n"
+                . $directoriesString
+            );
+        }
+
         return $result;
     }
 }
