@@ -6,7 +6,6 @@ namespace SlartyBartfast\Services;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
 use SlartyBartfast\Model\ApplicationModel;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class BuildSaver
@@ -26,7 +25,7 @@ class BuildSaver
         $this->filesystem  = $filesystem;
     }
 
-    public function saveBuild(InputInterface $input, OutputInterface $output)
+    public function saveBuild(OutputInterface $output): void
     {
         $currentDir = getcwd();
 
