@@ -3,30 +3,53 @@ declare(strict_types=1);
 
 namespace SlartyBartfast;
 
+use SlartyBartfast\Model\ApplicationModel;
+use SlartyBartfast\Services\ArtifactConfig;
+use SlartyBartfast\Services\BuildFinder;
+use SlartyBartfast\Services\FlySystemFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ShouldBuildApplicationsCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('TODO: Implement this');
-
+        $io = new SymfonyStyle($input, $output);
         // load configuration
+        $applicationConfig = new ArtifactConfig($input->getOption('config'));
 
-        // extract application configs from configuration
+        $filesystem = FlySystemFactory::getAdapter(
+            $applicationConfig->getRepositoryConfig()
+        );
 
-        // filter if needed
+        // Get application list (filtered)
+        $applications = $applicationConfig->getApplicationList($input->getOption('filter'));
 
-        // calculate hashes for each application
-
-        // calculate archive name based on hash
+        if ($applications->isEmpty()) {
+            $io->error('No applications match provided filter');
+            return 1;
+        }
 
         // determine if artifact exists in storage location
+        $buildNeeded = $applications->map(
+            function (ApplicationModel $app) use ($filesystem) {
+                return [
+                    $app->getName(),
+                    (new BuildFinder($app, $filesystem))->isBuildNeeded() ? 'YES' : 'NO',
+                ];
+            }
+        );
 
         // dump table based on results of above
+        $io->table(
+            ['Application', 'Build Needed'],
+            $buildNeeded->all()
+        );
+
+        return 0;
     }
 
     protected function configure()
