@@ -21,7 +21,7 @@ class FlySystemS3Factory
             );
         }
 
-        $client = S3Client::factory([
+        $client = new S3Client([
             'credentials' => [
                 'key'    => $options['key'],
                 'secret' => $options['secret'],
