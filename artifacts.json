@@ -34,7 +34,7 @@
     },
     {
       "name": "AMess",
-      "directories": ["."],
+      "directories": ["artifacts.json"],
       "command": "make aMess",
       "output_directory": "build/mess",
       "deploy_location": "./account-beta/build",
