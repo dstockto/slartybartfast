@@ -11,29 +11,34 @@
     {
       "name": "source",
       "directories": ["src"],
-      "command": "ant ui-build-account",
-      "output_directory": "./account-beta/build",
+      "command": "make src",
+      "output_directory": "src",
       "deploy_location": "./account-beta/build",
-      "artifact_prefix": "slarty-source",
-      "artifact_treatment": "zip"
+      "artifact_prefix": "slarty-source"
     },
     {
       "name": "Services",
       "directories": ["src/SlartyBartfast/Services"],
-      "command": "ant ui-build-account",
-      "output_directory": "./account-beta/build",
+      "command": "make Services",
+      "output_directory": "src/SlartyBartfast/Services",
       "deploy_location": "./account-beta/build",
-      "artifact_prefix": "slarty-services",
-      "artifact_treatment": "zip"
+      "artifact_prefix": "slarty-services"
     },
     {
       "name": "Models",
       "directories": ["src/SlartyBartfast/Model"],
-      "command": "ant ui-build-account",
-      "output_directory": "./account-beta/build",
+      "command": "make Model",
+      "output_directory": "src/SlartyBartfast/Model",
       "deploy_location": "./account-beta/build",
-      "artifact_prefix": "slarty-models",
-      "artifact_treatment": "zip"
+      "artifact_prefix": "slarty-models"
+    },
+    {
+      "name": "AMess",
+      "directories": ["."],
+      "command": "make aMess",
+      "output_directory": "build/",
+      "deploy_location": "./account-beta/build",
+      "artifact_prefix": "slarty-mess"
     }
   ]
 }
