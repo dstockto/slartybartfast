@@ -10,7 +10,6 @@ class DirectoryHasher
     private $root;
     private $directories = [];
 
-    
     /**
      * DirectoryHasher constructor.
      *
