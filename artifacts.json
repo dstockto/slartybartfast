@@ -13,7 +13,7 @@
       "directories": ["src"],
       "command": "make src",
       "output_directory": "src",
-      "deploy_location": "./account-beta/build",
+      "deploy_location": "build/sauce",
       "artifact_prefix": "slarty-source"
     },
     {
@@ -21,7 +21,7 @@
       "directories": ["src/SlartyBartfast/Services"],
       "command": "make Services",
       "output_directory": "src/SlartyBartfast/Services",
-      "deploy_location": "./account-beta/build",
+      "deploy_location": "build/sarvice",
       "artifact_prefix": "slarty-services"
     },
     {
@@ -29,7 +29,7 @@
       "directories": ["src/SlartyBartfast/Model"],
       "command": "make Model",
       "output_directory": "src/SlartyBartfast/Model",
-      "deploy_location": "./account-beta/build",
+      "deploy_location": "build/murdles",
       "artifact_prefix": "slarty-models"
     },
     {
@@ -37,7 +37,7 @@
       "directories": ["artifacts.json"],
       "command": "make aMess",
       "output_directory": "build/mess",
-      "deploy_location": "./account-beta/build",
+      "deploy_location": "build/deploy/merss",
       "artifact_prefix": "slarty-mess"
     }
   ]
