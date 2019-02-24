@@ -30,7 +30,7 @@ class BuildDeployer
         $this->filesystem  = $filesystem;
     }
 
-    public function deploy(OutputInterface $output)
+    public function deploy(OutputInterface $output): void
     {
         $currentDir = getcwd();
         chdir($this->application->getRoot());
@@ -54,7 +54,11 @@ class BuildDeployer
         $output->writeln('Found artifact ' . $namer . ' for ' . $this->application->getName());
 
         if (!file_exists($this->application->getDeployLocation())) {
-            if (!mkdir($concurrentDirectory = $this->application->getDeployLocation(), 0755, true) && !is_dir($concurrentDirectory)) {
+            if (!mkdir(
+                $concurrentDirectory = $this->application->getDeployLocation(),
+                0755,
+                true
+                ) && !is_dir($concurrentDirectory)) {
                 throw new \RuntimeException(
                     sprintf('Directory "%s" was not created', $concurrentDirectory)
                 );
@@ -63,7 +67,10 @@ class BuildDeployer
 
         // download it
         chdir($this->application->getDeployLocation());
-        file_put_contents($namer->getArtifactName(), $this->filesystem->read($namer->getArtifactName()));
+        $file = fopen($namer->getArtifactName(), 'wb');
+        $readStream = $this->filesystem->read($namer->getArtifactName());
+        fwrite($file, $readStream['contents']);
+        fclose($file);
 
         // unzip it
         shell_exec("unzip {$namer->getArtifactName()}");
