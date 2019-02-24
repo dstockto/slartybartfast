@@ -6,6 +6,8 @@ namespace SlartyBartfast\Services;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
 use SlartyBartfast\Model\ApplicationModel;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class BuildSaver
 {
@@ -24,7 +26,7 @@ class BuildSaver
         $this->filesystem  = $filesystem;
     }
 
-    public function saveBuild()
+    public function saveBuild(InputInterface $input, OutputInterface $output)
     {
         $currentDir = getcwd();
 
@@ -46,7 +48,7 @@ class BuildSaver
         $archiveFile = fopen($artifactName, 'rb');
         // transfer that zip to the filesystem with the name provided
         $this->filesystem->writeStream($artifactName, $archiveFile, new Config());
-
+        $output->writeln(["-- Saved $artifactName to repository."]);
         // Remove local zip file
         unlink($artifactName);
         chdir($currentDir);

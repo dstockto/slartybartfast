@@ -82,7 +82,7 @@ class DoBuildsCommand extends Command
                 }
 
                 $saver = new BuildSaver($builder->getApplication(), $filesystem);
-                $saver->saveBuild();
+                $saver->saveBuild($input, $output);
             }
         );
 
