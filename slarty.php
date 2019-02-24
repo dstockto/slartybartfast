@@ -16,12 +16,14 @@ use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
 
 $commandLoader = new FactoryCommandLoader(
     [
+        // hidden
         'greet' => function () {
             return new TimeCommand();
         },
         'hash' => function () {
             return new HashCommand();
         },
+        // hidden
         'artifact-names' => function() {
             return new ArtifactNamesCommand();
         },
