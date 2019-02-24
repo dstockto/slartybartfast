@@ -61,7 +61,7 @@ class HashApplicationCommand extends Command
             ->setHelp('Allows you to hash configured applications')
             ->addOption(
                 'config',
-                null,
+                'c',
                 InputOption::VALUE_REQUIRED,
                 'artifacts.json location',
                 './artifacts.json'

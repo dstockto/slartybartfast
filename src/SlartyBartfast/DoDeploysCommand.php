@@ -27,7 +27,7 @@ class DoDeploysCommand extends Command
             ->setHelp('Deploys the applications in the locations configured')
             ->addOption(
                 'config',
-                null,
+                'c',
                 InputOption::VALUE_REQUIRED,
                 'artifacts.json location',
                 './artifacts.json'

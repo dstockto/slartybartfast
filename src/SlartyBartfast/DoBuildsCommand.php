@@ -29,7 +29,7 @@ class DoBuildsCommand extends Command
             ->setHelp('Runs builds, creates artifacts, stores them in cache location')
             ->addOption(
                 'config',
-                null,
+                'c',
                 InputOption::VALUE_REQUIRED,
                 'artifacts.json location',
                 './artifacts.json'

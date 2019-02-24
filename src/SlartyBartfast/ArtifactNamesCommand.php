@@ -64,7 +64,7 @@ class ArtifactNamesCommand extends Command
             ->setHelp('Show the names of the artifacts that will be created for each application')
             ->addOption(
                 'config',
-                null,
+                'c',
                 InputOption::VALUE_REQUIRED,
                 'artifacts.json location',
                 './artifacts.json'
