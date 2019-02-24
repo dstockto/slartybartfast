@@ -40,6 +40,6 @@ $commandLoader = new FactoryCommandLoader(
     ]
 );
 
-$app = new Application('Console App', 'v1.0.0');
+$app = new Application('Starty Bartfast', 'v1.0.0');
 $app->setCommandLoader($commandLoader);
 $app->run();
