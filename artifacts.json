@@ -1,6 +1,12 @@
 {
   "application": "Slarty Bartfast",
   "root_directory": "__DIR__",
+  "repository": {
+    "adapter": "Local",
+    "options": {
+      "root": "/tmp/artifact-repo"
+    }
+  },
   "artifacts": [
     {
       "name": "source",
