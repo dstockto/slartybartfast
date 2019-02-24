@@ -84,4 +84,13 @@ class ArtifactConfig
             }
         );
     }
+
+    public function getRepositoryConfig(): array
+    {
+        if (!array_key_exists('repository', $this->configuration)) {
+            throw new \RuntimeException('Configuration is missing the repository section');
+        }
+
+        return $this->configuration['repository'];
+    }
 }
