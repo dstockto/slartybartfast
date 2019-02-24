@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace SlartyBartfast\Services;
 
 use League\Flysystem\AdapterInterface;
-use SlartyBartfast\DirectoryHasher;
 use SlartyBartfast\Model\ApplicationModel;
 
 class BuildFinder

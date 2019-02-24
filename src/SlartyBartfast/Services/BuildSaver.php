@@ -5,7 +5,6 @@ namespace SlartyBartfast\Services;
 
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
-use SlartyBartfast\DirectoryHasher;
 use SlartyBartfast\Model\ApplicationModel;
 
 class BuildSaver

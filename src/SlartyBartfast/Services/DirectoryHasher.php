@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace SlartyBartfast;
+namespace SlartyBartfast\Services;
 
 class DirectoryHasher
 {
@@ -10,6 +10,7 @@ class DirectoryHasher
     private $root;
     private $directories = [];
 
+    
     /**
      * DirectoryHasher constructor.
      *
