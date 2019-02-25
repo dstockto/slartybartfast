@@ -33,7 +33,14 @@ class BuildDeployer
     public function deploy(OutputInterface $output): void
     {
         $currentDir = getcwd();
-        chdir($this->application->getRoot());
+        $output->writeln('Deployer current dir: ' . $currentDir);
+        $changed = chdir($this->application->getRoot());
+        if ($changed) {
+            $output->writeln('Changed to ' . $this->application->getRoot());
+        } else {
+            $output->writeln('Unable to change to app root directory: ' . $this->application->getRoot());
+        }
+
         // determine archive name
         $namer = new ArtifactNamer(
             $this->application,
@@ -47,6 +54,7 @@ class BuildDeployer
         $finder = new BuildFinder($this->application, $this->filesystem);
 
         if ($finder->isBuildNeeded()) {
+            $output->writeln('Build is not found. Switching directory back to ' . $currentDir);
             chdir($currentDir);
             throw new \RuntimeException('Missing build ' . $namer->getArtifactName());
         }
@@ -54,6 +62,10 @@ class BuildDeployer
         $output->writeln('Found artifact ' . $namer . ' for ' . $this->application->getName());
 
         if (!file_exists($this->application->getDeployLocation())) {
+            $output->writeln(
+                'Deployment location does not exist, creating: ' .
+                $this->application->getDeployLocation()
+            );
             if (!mkdir(
                 $concurrentDirectory = $this->application->getDeployLocation(),
                 0755,
@@ -63,10 +75,12 @@ class BuildDeployer
                     sprintf('Directory "%s" was not created', $concurrentDirectory)
                 );
             }
+            $output->writeln('Created deploy location');
         }
 
         // download it
         chdir($this->application->getDeployLocation());
+        $output->writeln('Changed directory to (deploy location): ' . getcwd());
         $file = fopen($namer->getArtifactName(), 'wb');
         $readStream = $this->filesystem->read($namer->getArtifactName());
         fwrite($file, $readStream['contents']);
@@ -74,8 +88,25 @@ class BuildDeployer
 
         $output->writeln([' - Downloaded artifact']);
 
+        if (!file_exists(getcwd() . '/' . $namer->getArtifactName())) {
+            $output->writeln('Unable to location file where we thought it was');
+        }
+
         // unzip it
-        shell_exec("unzip -uof {$namer->getArtifactName()}");
+        $flags = ['o'];
+
+        if ($output->isVerbose()) {
+            $flags[] = 'l';
+        } else {
+            $flags[] = 'q';
+        }
+
+        $flagString = '-' . implode('', $flags);
+
+        $command = "unzip $flagString {$namer->getArtifactName()}";
+        $output->writeln('Running ' . $command);
+        exec($command, $shellOut, $exitCode);
+        $output->writeln($shellOut);
 
         $output->writeln([' - Unzipped artifact']);
 
@@ -83,6 +114,7 @@ class BuildDeployer
 
         $output->writeln([' - Deleted (zip) artifact']);
 
+        $output->writeln('Restoring location');
         chdir($currentDir);
     }
 }
