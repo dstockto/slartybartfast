@@ -28,6 +28,7 @@ class BuildSaver
     public function saveBuild(OutputInterface $output): void
     {
         $currentDir = getcwd();
+        chdir($this->application->getRoot());
 
         $namer = new ArtifactNamer(
             $this->application,
