@@ -43,7 +43,7 @@ Slarty Bartfast currently supports the local file system and Amazon's S3 as repo
 
 The local repository configuration is simplest. The only value needed in options is "root". Here's a sample local configuration:
 
-```$json
+```
 {
   ...
   "repository": {
@@ -60,7 +60,7 @@ The local repository configuration is simplest. The only value needed in options
 
 To use AWS S3 as a repository a few more options are required. Here's an example:
 
-```$json
+```
 {
    ...
    "repository": {
@@ -85,7 +85,7 @@ The artifacts section is an array of objects. Each of those objects defines the 
 
 An example:
 
-```$json
+```
 {
       "name": "Models",
       "directories": ["src/SlartyBartfast/Model"],
@@ -111,7 +111,7 @@ Slarty Bartfast provides a number of commands. All are executed with ./slarty or
 
 The hash command does not require artifacts config. The root value is where to start calculating the hash from and the directories are space separated relative paths to use when calculating the hash. The order of the provided directories will not affect the hash result.
 
-```$text
+```
 ➜  SlartyBartfast git:(master) ✗ ./slarty hash ~/Projects/ballottrax_vm/ballottrax_web voterUI
 
  c39bffc99a4277c31ad8185a8e2a0919bbe44a82
@@ -123,7 +123,7 @@ If the directories do not exist or are empty, you'll see an error. Please note: 
 
 The `artifact-names` command can accept [-c|--config] and [-f|--filter] options. Both are optional. If no configuration file is specified, it will default to ./artifacts.json. The filter option is used to provide a list of applications for which to provide artifact names. The result of this command is a table of applications paired with the artifact name for the current state of the repo:
 
-```$text
+```
 ➜  SlartyBartfast git:(master) ✗ ./slarty artifact-names
  ------------- --------------------------------------------------------------
   Application   Artifact Name
@@ -140,7 +140,7 @@ The `artifact-names` command can accept [-c|--config] and [-f|--filter] options.
 
 Similarly to artifact-names, hash-application takes the same [-c|--config] and [-f|--filter] options. Instead of an artifact name, it provides the hashes alone.
 
-```$text
+```
 ➜  SlartyBartfast git:(master) ✗ ./slarty hash-application
  ------------- ------------------------------------------
   Application   Hash
