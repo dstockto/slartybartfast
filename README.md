@@ -107,7 +107,7 @@ An example:
 
 Slarty Bartfast provides a number of commands. All are executed with ./slarty or /path/to/slarty.
 
-### ./slarty hash \<root\> \<directories...\>
+### ./slarty hash <root\> <directories...\>
 
 The hash command does not require artifacts config. The root value is where to start calculating the hash from and the directories are space separated relative paths to use when calculating the hash. The order of the provided directories will not affect the hash result.
 
@@ -232,3 +232,44 @@ The name of Slarty Bartfast comes from a character from The Hitchhiker's Guide t
 
 The name of the program went through a couple of ideas. The first two were "Artificer" and "Artifactory" but it turns out both of those are things that exist. Next was Slartibartifact which is fun to say but less fun to type as a command. Eventually I came back to "Slarty Bartfast" because of misremembering how to spell "Slartibartfast", but now it's totally on purpose because "./slarty" is simple enough and if this gets released, maybe searching for "Slarty Bartfast" will eventually get you to this program.
 
+## Full Example Configuration
+
+Below is a full example config for an app that has two separate builds and artifacts and is using S3 as its storage location for artifact archives.
+
+```
+{
+  "application": "Sample Application",
+  "root_directory": "__DIR__",
+    "repository": {
+    "adapter": "s3",
+    "options": {
+      "key": "AKABAKWAMBALAMBADOOP",
+      "secret": "I+Kn0wS0m3th1ngY0uD0n+tKN0W4Ab0UTtRY2GU355",
+      "region": "us-east-1",
+      "bucket-name": "example-app-artifacts",
+      "path-prefix": "Example/App"
+    }
+  },
+
+  "artifacts": [
+    {
+      "name": "Purple App",
+      "directories": ["src/Purple"],
+      "command": "make srcPurple",
+      "output_directory": "build/purple",
+      "deploy_location": "public/purple",
+      "artifact_prefix": "purple-app"
+    },
+        {
+      "name": "Green App",
+      "directories": ["src/Green"],
+      "command": "make srcGren",
+      "output_directory": "build/green",
+      "deploy_location": "public/green",
+      "artifact_prefix": "green-app"
+    },
+  ]
+}
+```
+
+If there are any unanswered questions, problems, desired features, please contact dstockton@i3logix.com.
