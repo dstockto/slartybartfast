@@ -42,7 +42,7 @@ class ApplicationModel
         string $outputDirectory,
         string $deployLocation,
         string $artifactPrefix,
-        string $artifactTreatment = 'zip'
+        string $artifactTreatment = 'tar' // Not used currently
     ) {
         $this->root              = $root;
         $this->name              = $name;

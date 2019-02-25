@@ -40,16 +40,16 @@ class BuildSaver
 
         $artifactName = $namer->getArtifactName();
 
-        // zip the output directory
+        // tar the output directory
         chdir($this->application->getOutputDirectory());
-        $command = "zip -r $artifactName .";
+        $command = "tar -cvf $artifactName .";
         shell_exec($command);
 
         $archiveFile = fopen($artifactName, 'rb');
-        // transfer that zip to the filesystem with the name provided
+        // transfer that tar to the filesystem with the name provided
         $this->filesystem->writeStream($artifactName, $archiveFile, new Config());
         $output->writeln(["-- Saved $artifactName to repository."]);
-        // Remove local zip file
+        // Remove local tar file
         unlink($artifactName);
         chdir($currentDir);
     }

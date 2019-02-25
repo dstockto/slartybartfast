@@ -1,1 +1,3 @@
-slarty.php
+#!/bin/bash
+
+php /Users/dstockton/Projects/SlartyBartfast/slarty.php $@

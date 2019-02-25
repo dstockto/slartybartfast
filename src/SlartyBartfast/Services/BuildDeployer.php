@@ -92,27 +92,17 @@ class BuildDeployer
             $output->writeln('Unable to location file where we thought it was');
         }
 
-        // unzip it
-        $flags = ['o'];
-
-        if ($output->isVerbose()) {
-            $flags[] = 'l';
-        } else {
-            $flags[] = 'q';
-        }
-
-        $flagString = '-' . implode('', $flags);
-
-        $command = "unzip $flagString {$namer->getArtifactName()}";
+        // untar it
+        $command = "tar -xvf {$namer->getArtifactName()}";
         $output->writeln('Running ' . $command);
         exec($command, $shellOut, $exitCode);
         $output->writeln($shellOut);
 
-        $output->writeln([' - Unzipped artifact']);
+        $output->writeln([' - Untarred artifact']);
 
         unlink($namer->getArtifactName());
 
-        $output->writeln([' - Deleted (zip) artifact']);
+        $output->writeln([' - Deleted (tar) artifact']);
 
         $output->writeln('Restoring location');
         chdir($currentDir);
