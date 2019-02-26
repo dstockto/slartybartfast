@@ -42,6 +42,6 @@ $commandLoader = new FactoryCommandLoader(
     ]
 );
 
-$app = new Application('Starty Bartfast', 'v1.0.0');
+$app = new Application('Slarty Bartfast', 'v1.0.0');
 $app->setCommandLoader($commandLoader);
 $app->run();
