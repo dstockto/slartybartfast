@@ -30,6 +30,7 @@ class FlySystemS3Factory
             'version' => 'latest',
         ]);
 
+        // TODO: Not 5.5 compatible
         return new AwsS3Adapter($client, $options['bucket-name'], $options['path-prefix'] ?? '');
      }
 }

@@ -93,7 +93,7 @@ class BuildDeployer
         }
 
         // untar it
-        $command = "tar -xvf {$namer->getArtifactName()}";
+        $command = "tar -xzvf {$namer->getArtifactName()}";
         $output->writeln('Running ' . $command);
         exec($command, $shellOut, $exitCode);
         $output->writeln($shellOut);

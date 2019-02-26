@@ -42,7 +42,7 @@ class BuildSaver
 
         // tar the output directory
         chdir($this->application->getOutputDirectory());
-        $command = "tar -cvf $artifactName .";
+        $command = "tar -cvzf $artifactName .";
         shell_exec($command);
 
         $archiveFile = fopen($artifactName, 'rb');

@@ -41,7 +41,7 @@ class ArtifactNamer
                     $this->application->getArtifactPrefix(),
                     '-',
                     $this->hash,
-                    '.tar'
+                    '.tar.gz'
                 ]
             )
         );
