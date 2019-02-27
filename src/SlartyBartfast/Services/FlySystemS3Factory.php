@@ -11,23 +11,18 @@ class FlySystemS3Factory
     public static function build(array $options): AwsS3Adapter
     {
         if (!isset(
-            $options['key'],
-            $options['secret'],
-            $options['region'],
-            $options['bucket-name']
+            $options['bucket-name'],
+            $options['region']
         )) {
             throw new \RuntimeException(
-                'Missing required S3 configuration keys: key, secret, region and/or bucket-name'
+                'Missing required S3 configuration keys: bucket-name or region'
             );
         }
 
         $client = new S3Client([
-            'credentials' => [
-                'key'    => $options['key'],
-                'secret' => $options['secret'],
-            ],
-            'region' => $options['region'] ?? null,
             'version' => 'latest',
+            'profile' => $options['profile'] ?? 'default',
+            'region'  => $options['region']
         ]);
 
         // TODO: Not 5.5 compatible
