@@ -66,18 +66,17 @@ To use AWS S3 as a repository a few more options are required. Here's an example
    "repository": {
     "adapter": "s3",
     "options": {
-      "key": "<aws s3 key>",
-      "secret": "<aws secret>",
       "region": "us-east-1",
       "bucket-name": "<aws bucket name>",
-      "path-prefix": "path/to/repo"
+      "path-prefix": "path/to/repo",
+      "profile": "default (optional)"
     }
   },
   ...
 }
 ``` 
 
-Most of the values should be obvious what they are for. The path-prefix is the only optional value. If provided, it will result in the artifacts being placed in pseudo-directories on S3. It can be a good way to keep different applications' artifacts in the same bucket but keep them separated.
+Most of the values should be obvious what they are for. The path-prefix is the only optional value. If provided, it will result in the artifacts being placed in pseudo-directories on S3. It can be a good way to keep different applications' artifacts in the same bucket but keep them separated. You should have your AWS credentials in the `~/.aws/credentials` file of the user that will be running Slarty Bartfast. The profile key is optional and will default to "default", but if you would like Slarty to use credentials from a different profile section in your credentials file, this is where to put that.
 
 ### Configuration - "artifacts" section
 
@@ -92,7 +91,8 @@ An example:
       "command": "make Model",
       "output_directory": "src/SlartyBartfast/Model",
       "deploy_location": "build/murdles",
-      "artifact_prefix": "slarty-models"
+      "artifact_prefix": "slarty-models",
+      "root": "optional/override"
     }
 ```
 
@@ -102,6 +102,7 @@ An example:
 * **output_directory** - This is the directory that will be zipped to form the archive file that will be stored in the repository
 * **deploy_location** - This is the location where the archive should be unzipped to
 * **artifact_prefix** - This value is used in part of the naming of the archive zip file. The archive name is essentially {archive_prefix}-{hash}.zip. It helps identify what the artifact belong to or came from if looking on the file system.
+* **root** - The root value at the artifact level is optional and you may never need to use it. By default, each artifact will use the root directory from the root of the configuration. If you need, for some reason, to calculate a hash from a different starting location for an application, you could provide that different root here. Again, in most cases you will not need this.
 
 ## Slarty Bartfast Commands
 
