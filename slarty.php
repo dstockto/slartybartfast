@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
 use SlartyBartfast\ArtifactNamesCommand;
+use SlartyBartfast\DeployAssetsCommand;
 use SlartyBartfast\DoBuildsCommand;
 use SlartyBartfast\DoDeploysCommand;
 use SlartyBartfast\HashApplicationCommand;
@@ -39,9 +40,12 @@ $commandLoader = new FactoryCommandLoader(
         'do-deploys' => function() {
             return new DoDeploysCommand();
         },
+        'deploy-assets' => function() {
+            return new DeployAssetsCommand();
+        },
     ]
 );
 
-$app = new Application('Slarty Bartfast', 'v1.0.0');
+$app = new Application('Slarty Bartfast - PHP 7.2+ Edition', 'v1.0.0');
 $app->setCommandLoader($commandLoader);
 $app->run();

@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace SlartyBartfast\Services;
 
+use RuntimeException;
 use SlartyBartfast\Model\ApplicationModel;
 use Tightenco\Collect\Support\Collection;
+use SlartyBartfast\Model\AssetModel;
 
 class ArtifactConfig
 {
@@ -14,6 +16,8 @@ class ArtifactConfig
     private $configPath;
     /** @var Collection */
     private $applicationModels;
+    /** @var Collection */
+    private $assetModels;
 
     /**
      * ArtifactConfig constructor.
@@ -26,23 +30,24 @@ class ArtifactConfig
         $this->validate();
         $this->loadConfig();
         $this->buildApplicationModels();
+        $this->buildAssetModels();
     }
 
     private function validate(): void
     {
         // ensure it exists, throw if not
         if (!file_exists($this->configPath)) {
-            throw new \RuntimeException('Configuration file does not exist');
+            throw new RuntimeException('Configuration file does not exist');
         }
     }
 
     private function loadConfig(): void
     {
         $json = file_get_contents($this->configPath);
-        $configuration = \json_decode($json, true);
+        $configuration = json_decode($json, true);
 
         if ($configuration === null) {
-            throw new \RuntimeException('JSON Configuration was malformed');
+            throw new RuntimeException('JSON Configuration was malformed');
         }
 
         $this->configuration = $configuration;
@@ -70,6 +75,25 @@ class ArtifactConfig
         );
     }
 
+    public function getAssetList(array $filters): Collection
+    {
+        $filterCollection = collect($filters)->map(
+            function ($filter) {
+                return strtolower($filter);
+            }
+        );
+
+        if (empty($filters)) {
+            return $this->assetModels;
+        }
+
+        return $this->assetModels->filter(
+            function (AssetModel $asset) use ($filterCollection) {
+                return $filterCollection->contains(strtolower($asset->getName()));
+            }
+        );
+    }
+
     private function buildApplicationModels(): void
     {
         $root = $this->configuration['root_directory'];
@@ -91,10 +115,32 @@ class ArtifactConfig
         );
     }
 
+    private function buildAssetModels(): void
+    {
+        $root = $this->configuration['root_directory'];
+
+        if (!array_key_exists('assets', $this->configuration)) {
+            $this->assetModels = collect();
+            return;
+        }
+        $assets = collect($this->configuration['assets']);
+
+        $this->assetModels = $assets->map(
+            function ($assetConfig) use ($root) {
+                return new AssetModel(
+                    $assetConfig['name'],
+                    $assetConfig['filename'],
+                    $assetConfig['deploy_location'],
+                    $root
+                );
+            }
+        );
+    }
+
     public function getRepositoryConfig(): array
     {
         if (!array_key_exists('repository', $this->configuration)) {
-            throw new \RuntimeException('Configuration is missing the repository section');
+            throw new RuntimeException('Configuration is missing the repository section');
         }
 
         return $this->configuration['repository'];

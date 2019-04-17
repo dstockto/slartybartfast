@@ -4,18 +4,16 @@ declare(strict_types=1);
 namespace SlartyBartfast;
 
 use RuntimeException;
-use SlartyBartfast\Model\ApplicationModel;
+use SlartyBartfast\Model\AssetModel;
 use SlartyBartfast\Services\ArtifactConfig;
 use SlartyBartfast\Services\AssetDeployer;
-use SlartyBartfast\Services\BuildDeployer;
 use SlartyBartfast\Services\FlySystemFactory;
-use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
-class DoDeploysCommand extends Command
+class DeployAssetsCommand extends SymfonyCommand
 {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -25,20 +23,17 @@ class DoDeploysCommand extends Command
             throw new RuntimeException('Provided artifacts.json file does not exist');
         }
 
-        $io                = new SymfonyStyle($input, $output);
         $applicationConfig = new ArtifactConfig($input->getOption('config'));
 
         $filesystem = FlySystemFactory::getAdapter(
             $applicationConfig->getRepositoryConfig()
         );
 
-        // Get application list (filtered)
-        $applications = $applicationConfig->getApplicationList($input->getOption('filter'));
+        $assets = $applicationConfig->getAssetList($input->getOption('filter'));
 
-        // calculate hash->archive name, download archive, extract to configured location
-        $deployers = $applications->map(
-            function (ApplicationModel $app) use ($filesystem) {
-                return new BuildDeployer($app, $filesystem);
+        $deployers = $assets->map(
+            function (AssetModel $asset) use ($filesystem) {
+                return new AssetDeployer($asset, $filesystem);
             }
         );
 
@@ -47,15 +42,13 @@ class DoDeploysCommand extends Command
                 $deployer->deploy($output);
             }
         );
-
-        // if archive isn't found, error
     }
 
     protected function configure()
     {
-        $this->setName('do-deploys')
-            ->setDescription('Deploys the applications')
-            ->setHelp('Deploys the applications in the locations configured')
+        $this->setName('deploy-assets')
+            ->setDescription('Deploys assets for the application')
+            ->setHelp('Deploys assets to the configured locations')
             ->addOption(
                 'config',
                 'c',
@@ -67,7 +60,7 @@ class DoDeploysCommand extends Command
                 'filter',
                 'f',
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
-                'Limit to only some applications'
+                'Limit to only some assets'
             );
     }
 }

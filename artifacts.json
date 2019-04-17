@@ -40,5 +40,17 @@
       "deploy_location": "build/deploy/merss",
       "artifact_prefix": "slarty-mess"
     }
+  ],
+  "assets": [
+    {
+      "name": "Some Asset",
+      "filename": "smurpy.tar.gz",
+      "deploy_location": "build/assets/smurpy"
+    },
+    {
+      "name": "Legitimate Business",
+      "filename": "opposite_of_murder-4.2.tar.gz",
+      "deploy_location": "build/assets/unicorns"
+    }
   ]
 }

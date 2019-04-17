@@ -1,10 +1,14 @@
 # Slarty Bartfast
 
-Slarty Bartfast is an artifact manager to help simplify build and deploy processes dealing with "artifacts".
+Slarty Bartfast is an artifact manager to help simplify build and deploy processes dealing with "artifacts" and "assets".
 
 ## What is an Artifact?
 
 An artifact is the result of a code change - meaning it could be a compiled executable, a zip file containing transpiled javascript or even just the contents of a project directory if that's what is needed to allow the application to run on a server. In short, an artifact ultimate ends of being a zip file containing code or binaries or a combination of those which can be used whenever we'd otherwise need to build an application.
+
+## What is an asset?
+
+An asset is something your application needs in order to run, but it is not the result of your own code. It could be a third party library or other code or files that ideally don't change all that often. An example might be a version of the ExtJS framework. The application needs it to function, but it doesn't work with a normal package manager like npm or yarn. Slart Bartfast allows these to be stored in the repository as a tar.gz file and then retrieved and deployed via the `slarty deploy-assets` command.
 
 ## Why was Slarty Bartfast created?
 
@@ -32,6 +36,7 @@ Slarty Bartfast uses a json configuration file called `artifacts.json` by defaul
 * **root_directory** - The location of the root directory of the project. Everything Slarty Bartfast does will be relative to that directory. For convenience, you can use the "__DIR__" value to indicate that the root of the project is the same as the location of the artifacts.json file. Changing the root directory and the application's locations relative to that will result in a different identifier value and could result in different archive contents even if the actual source hasn't changed. It's highly recommended to put artifacts.json in the project's root directory and use `__DIR__`
 * **repository** - This is the configuration for where build artifacts should be stored. It will be discussed in detail below.
 * **artifacts** - This is where you configure each of the builds. More on this later as well.
+* **assets** - This is where you configure assets for deployment. More on this later too.
 
 ### Configuration - "repository" section
 
@@ -103,6 +108,26 @@ An example:
 * **deploy_location** - This is the location where the archive should be unzipped to
 * **artifact_prefix** - This value is used in part of the naming of the archive zip file. The archive name is essentially {archive_prefix}-{hash}.zip. It helps identify what the artifact belong to or came from if looking on the file system.
 * **root** - The root value at the artifact level is optional and you may never need to use it. By default, each artifact will use the root directory from the root of the configuration. If you need, for some reason, to calculate a hash from a different starting location for an application, you could provide that different root here. Again, in most cases you will not need this.
+
+## Configuration - "assets" section
+
+The assets section is an array of objects. Each object defines the information needed to retrieve an asset from the artifact repository as well as where it should be unzipped to. At this time, the assets section only is used for the `deploy-assets` command. No other command uses or is aware of this section. 
+
+An example:
+
+```
+{
+  "name": "ExtJS 4.2",
+  "filename": "extjs-4.2.tar.gz",
+  "deploy_location": "library/extjs-4.2"
+}
+```
+
+* **name** - The name of the artifact is a friendly name that can be used to filter. You can limit the deploy-assets command to only deploying some assets by filtering on this name.
+
+* **filename** - This is the name of the file that should be found in the artifact repository. At this time the file must exist in the same location as all the other artifacts.
+
+* **deploy_location** - This is the location where the asset will be downloaded and expanded. After expansion the asset archive itself will be removed.
 
 ## Slarty Bartfast Commands
 
@@ -227,6 +252,14 @@ Found artifact slarty-mess-f2788bbe13c3240951a10d97593467a68502e2f7.zip for AMes
 
 The `do-deploy` process will create the directory structure specified in the `deploy_location` value. However, if that structure exists and contains files, it will not be cleared. That is a separate responsibility that should be taken care of elsewhere. The idea is that if an application needs to deploy several artifacts to the same place, it can do so. The unzipping command will overwrite any existing files that are in place when the deploy occurs. It will not remove any files that were already in place, so if a file existed in one deployment archive and then does not exist in the next, it would still exist in the deployment output directory.
 
+### ./slarty deploy-assets 
+
+The `deploy-assets` command accepts the `--filter` and `--config` options. They work the same as the other commands, except filter works on the name value in the config.
+
+If you run `slarty deploy-assets` and Slarty is unable to find one of the referenced files in the artifact repository, the command will fail and tell you the asset that is missing. At this time, it does not "pre-check" for existence. It will work through the assets in order and it will fail on the first one that is missing. If it fails the return code of slarty will be non-zero.
+
+The `deploy-assets` command will create the output directory path if it does not exist. It will be relative to the configured "root_directory" configuration option at the root.
+
 ## Why Slarty Bartfast?
 
 The name of Slarty Bartfast comes from a character from The Hitchhiker's Guide to the Galaxy (HHGTTG). In the book, Slartibartfast works for works on the planet Magrathea, as a designer of custom planets. His favorite part of the job is designing coastlines and he won an award for the fjords in Norway. For Slartibartfast, planets are artifacts.
@@ -269,7 +302,20 @@ Below is a full example config for an app that has two separate builds and artif
       "deploy_location": "public/green",
       "artifact_prefix": "green-app"
     },
-  ]
+  ],
+  
+  "assets": [
+      {
+        "name": "Some Asset",
+        "filename": "smurpy.tar.gz",
+        "deploy_location": "build/assets/smurpy"
+      },
+      {
+        "name": "Legitimate Business",
+        "filename": "opposite_of_murder-4.2.tar.gz",
+        "deploy_location": "build/assets/unicorns"
+      }
+    ]
 }
 ```
 
