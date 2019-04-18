@@ -43,7 +43,7 @@ class DoDeploysCommand extends Command
         );
 
         $deployers->each(
-            function (AssetDeployer $deployer) use ($output) {
+            function (BuildDeployer $deployer) use ($output) {
                 $deployer->deploy($output);
             }
         );
