@@ -6,6 +6,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use SlartyBartfast\ArtifactNamesCommand;
 use SlartyBartfast\DeployAssetsCommand;
+use SlartyBartfast\DeployCleanup;
 use SlartyBartfast\DoBuildsCommand;
 use SlartyBartfast\DoDeploysCommand;
 use SlartyBartfast\HashApplicationCommand;
@@ -43,6 +44,9 @@ $commandLoader = new FactoryCommandLoader(
         'deploy-assets' => function() {
             return new DeployAssetsCommand();
         },
+        'do-cleanup' => function () {
+            return new DeployCleanup();
+        }
     ]
 );
 
