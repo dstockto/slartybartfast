@@ -24,7 +24,7 @@ class FlySystemS3Factory
             'region'  => $options['region'],
         ];
 
-        if ($options['profile'] !== null) {
+        if (isset($options['profile'])) {
             $clientOptions['profile'] = $options['profile'];
         }
 
