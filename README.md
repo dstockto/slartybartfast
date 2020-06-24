@@ -12,11 +12,9 @@ An asset is something your application needs in order to run, but it is not the 
 
 ## Why was Slarty Bartfast created?
 
-At i3logix, two of our projects use a "build" step for UI applications - BallotTrax and AppSuite. BallotTrax currently has two Angular applications and two React applications. The Angular applications haven't changed in a couple of years but we build them every time there's a pull request (PR) or a merge or a deploy. This is not necessary. Even the React applications have a similar issue. If a PR contains code that doesn't change the code in one of those UI applications, the exact same build result will occur but we've been doing the build anyway. With BalloTrax, and four applications, this adds a number of minutes (5-12 probably) to every PR build, merge build and deploy. We are also doing that build on the QA, demo and production environments as well as in development. If a developer is not working on changing the UI apps, building them over and over doesn't make any sense.
+At work, all of our projects use a "build" step for UI applications. These are typically React applications, but there's no reason this shouldn't work for any other application that takes a bunch of source code and creates a bundle or compiled artifact.  Each of our applications consists of multiple separate UI applications. In some cases some applications may not be modified or updated for a long time, and any given PR (pull request) likely only updates a single application. It doesn't make sense ot rebuild applications that haven't changed. This also gives a nice way to ensure that the exact same build of an application is what we use in QA, UAT, Production and any other environment.
 
-For AppSuite, the problem was slightly different and arguably larger. It had dozens of separated applications in separate repos each with their own build process. However, they did use an artifact system, but it was not automated. Whenever a change to a UI app was made, the developer would manually create a build, create an archive of that, figure out a version number and push that up to CNPM. In order to ensure the right version was deployed, it required a PR to the main application's bower.json (really several of them) which would deploy the right version. It meant that QA would get whatever they got and if more than one change happened on the UI repo, they could not pick and choose what they wanted or reject just one of the changes.
-
-We've updated the repositories so that AppSuite is now a "mono-repo" meaning all the code lives in the same repository. This means that the coordination problem is gone, in theory, since the UI code is part of the main repo. It means branch testing is possible since everything can work like PRs do. Except that without artifact deployment, it means that every PR and merge and deploy requires building the UI repos. For AppSuite especially, this is a lot of work that is not needed and it takes a lot of time -- more than 20 extra minutes at least -- and this is for every PR, merge, deploy, etc.
+Integrating Slarty into our PR and build process means that we are saving a ton of time by not doing work we don't need to. Deployments that previously built on the server can now download and deploy artifacts in a few seconds as well.
 
 ## What does Slarty Bartfast do?
 
@@ -138,7 +136,7 @@ Slarty Bartfast provides a number of commands. All are executed with ./slarty or
 The hash command does not require artifacts config. The root value is where to start calculating the hash from and the directories are space separated relative paths to use when calculating the hash. The order of the provided directories will not affect the hash result.
 
 ```
-➜  SlartyBartfast git:(master) ✗ ./slarty hash ~/Projects/ballottrax_vm/ballottrax_web voterUI
+➜  SlartyBartfast git:(master) ✗ ./slarty hash ~/Projects/myproject mydirectory
 
  c39bffc99a4277c31ad8185a8e2a0919bbe44a82
 ```
@@ -319,4 +317,4 @@ Below is a full example config for an app that has two separate builds and artif
 }
 ```
 
-If there are any unanswered questions, problems, desired features, please contact dstockton@i3logix.com.
+If there are any unanswered questions, problems, desired features, please contact slarty-support@davidstockton.com, or feel free to open a pull request.
