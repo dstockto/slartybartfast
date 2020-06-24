@@ -23,7 +23,7 @@
     "license": "MIT",
     "require": {
         "php": ">7.2",
-        "symfony/console": "^4.2",
+        "symfony/console": "^5",
         "tightenco/collect": "^v6",
         "league/flysystem": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0"
