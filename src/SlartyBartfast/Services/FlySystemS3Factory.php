@@ -19,11 +19,16 @@ class FlySystemS3Factory
             );
         }
 
-        $client = new S3Client([
+        $clientOptions = [
             'version' => 'latest',
-            'profile' => $options['profile'] ?? 'default',
-            'region'  => $options['region']
-        ]);
+            'region'  => $options['region'],
+        ];
+
+        if ($options['profile'] !== null) {
+            $clientOptions['profile'] = $options['profile'];
+        }
+
+        $client = new S3Client($clientOptions);
 
         // TODO: Not 5.5 compatible
         return new AwsS3Adapter($client, $options['bucket-name'], $options['path-prefix'] ?? '');
