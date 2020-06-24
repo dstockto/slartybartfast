@@ -2,7 +2,16 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/vendor/autoload.php';
+foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
+    if (file_exists($file)) {
+        define('SLARTY_COMPOSER_INSTALL', $file);
+        break;
+    }
+}
+
+unset($file);
+
+require SLARTY_COMPOSER_INSTALL;
 
 use SlartyBartfast\ArtifactNamesCommand;
 use SlartyBartfast\DeployAssetsCommand;
