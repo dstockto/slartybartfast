@@ -1,7 +1,28 @@
 {
-    "name": "dstockto/slartibartfast",
+    "name": "dstockto/slartybartfast",
+    "description": "Artifact build and deploy tool",
+    "keywords": [
+        "build",
+        "deploy",
+        "artifacts"
+    ],
+    "readme": "README.md",
+    "authors": [
+        {
+            "name": "David Stockton",
+            "email": "github@davidstockton.com",
+            "homepage": "https://davidstockton.dev",
+            "role": "developer"
+        }
+    ],
+    "support": {
+        "email": "slarty-support@davidstockton.com"
+    },
+    "bin": "slarty.php",
+    "type": "library",
     "license": "MIT",
     "require": {
+        "php": ">7.2",
         "roave/security-advisories": "dev-master",
         "symfony/console": "^4.2",
         "tightenco/collect": "v5.7.26",
