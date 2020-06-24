@@ -84,6 +84,7 @@ class DoBuildsCommand extends Command
         );
 
         $progress->finish();
+        return 0;
     }
 
     protected function configure()

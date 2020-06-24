@@ -42,6 +42,8 @@ class DeployAssetsCommand extends SymfonyCommand
                 $deployer->deploy($output);
             }
         );
+
+        return 0;
     }
 
     protected function configure()

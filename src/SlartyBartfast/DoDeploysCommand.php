@@ -48,7 +48,7 @@ class DoDeploysCommand extends Command
             }
         );
 
-        // if archive isn't found, error
+        return 0;
     }
 
     protected function configure()

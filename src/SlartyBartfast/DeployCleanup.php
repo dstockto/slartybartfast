@@ -46,6 +46,7 @@ class DeployCleanup extends SymfonyCommand
                 $io->success('Deploy directory for ' . $app->getName() . ' cleaned up.');
             }
         );
+        return 0;
     }
 
     protected function configure()
