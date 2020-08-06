@@ -18,6 +18,8 @@ class ArtifactConfig
     private $applicationModels;
     /** @var Collection */
     private $assetModels;
+    /** @var bool */
+    private $localOverride = false;
 
     /**
      * ArtifactConfig constructor.
@@ -143,6 +145,20 @@ class ArtifactConfig
             throw new RuntimeException('Configuration is missing the repository section');
         }
 
-        return $this->configuration['repository'];
+        $repoConfig = $this->configuration['repository'];
+        if ($this->localOverride) {
+            $repoConfig['adapter'] = 'local';
+        }
+
+        return $repoConfig;
+    }
+
+    /**
+     * Sets the configuration to return local for the adapter instead of whatever is configured. It does rely on the
+     * options['root'] setting to be in place already
+     */
+    public function doLocalOverride(): void
+    {
+        $this->localOverride = true;
     }
 }

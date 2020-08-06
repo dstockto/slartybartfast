@@ -21,6 +21,10 @@ class ShouldBuildApplicationsCommand extends Command
         // load configuration
         $applicationConfig = new ArtifactConfig($input->getOption('config'));
 
+        if ($input->getOption('local')) {
+            $applicationConfig->doLocalOverride();
+        }
+
         $filesystem = FlySystemFactory::getAdapter(
             $applicationConfig->getRepositoryConfig()
         );
@@ -69,6 +73,12 @@ class ShouldBuildApplicationsCommand extends Command
                 'f',
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 'Limit to only some applications'
+            )
+            ->addOption(
+                'local',
+                null,
+                null,
+                'Determine build status using local artifact repo'
             );
     }
 

@@ -6,7 +6,6 @@ namespace SlartyBartfast;
 use RuntimeException;
 use SlartyBartfast\Model\ApplicationModel;
 use SlartyBartfast\Services\ArtifactConfig;
-use SlartyBartfast\Services\AssetDeployer;
 use SlartyBartfast\Services\BuildDeployer;
 use SlartyBartfast\Services\FlySystemFactory;
 use Symfony\Component\Console\Command\Command;
@@ -25,8 +24,11 @@ class DoDeploysCommand extends Command
             throw new RuntimeException('Provided artifacts.json file does not exist');
         }
 
-        $io                = new SymfonyStyle($input, $output);
         $applicationConfig = new ArtifactConfig($input->getOption('config'));
+
+        if ($input->getOption('local')) {
+            $applicationConfig->doLocalOverride();
+        }
 
         $filesystem = FlySystemFactory::getAdapter(
             $applicationConfig->getRepositoryConfig()
@@ -68,6 +70,12 @@ class DoDeploysCommand extends Command
                 'f',
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 'Limit to only some applications'
+            )
+            ->addOption(
+                'local',
+                null,
+                null,
+                'Deploy from local artifact repo'
             );
     }
 }

@@ -317,4 +317,8 @@ Below is a full example config for an app that has two separate builds and artif
 }
 ```
 
+## Local Mode
+It is possible to use Slarty locally to run builds and test deployments. The `deploy-assets`, `do-builds`, `do-deploys`, and `should-build` commands all accept a `--local` flag which will act as though the artifacts.json has a repository adapter set to local. In order to help with this, I recommend you also include the repository->options->root value. The purpose of local mode is to allow for easier testing of builds and deployments without needing to change the artifacts.json file and then remember to not commit the changes to your source code repository. 
+
+## Questions?
 If there are any unanswered questions, problems, desired features, please contact slarty-support@davidstockton.com, or feel free to open a pull request.

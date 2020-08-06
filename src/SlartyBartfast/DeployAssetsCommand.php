@@ -25,6 +25,10 @@ class DeployAssetsCommand extends SymfonyCommand
 
         $applicationConfig = new ArtifactConfig($input->getOption('config'));
 
+        if ($input->getOption('local')) {
+            $applicationConfig->doLocalOverride();
+        }
+
         $filesystem = FlySystemFactory::getAdapter(
             $applicationConfig->getRepositoryConfig()
         );
@@ -63,6 +67,11 @@ class DeployAssetsCommand extends SymfonyCommand
                 'f',
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 'Limit to only some assets'
+            )->addOption(
+                'local',
+                null,
+                null,
+                'Deploy assets from local location'
             );
     }
 }

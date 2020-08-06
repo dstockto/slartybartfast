@@ -28,6 +28,10 @@ class DoBuildsCommand extends Command
         $io                = new SymfonyStyle($input, $output);
         $applicationConfig = new ArtifactConfig($input->getOption('config'));
 
+        if ($input->getOption('local')) {
+            $applicationConfig->doLocalOverride();
+        }
+
         $filesystem = FlySystemFactory::getAdapter(
             $applicationConfig->getRepositoryConfig()
         );
@@ -42,8 +46,6 @@ class DoBuildsCommand extends Command
                 return new AppBuilder($app, $filesystem, $force);
             }
         );
-
-        $sections = [];
 
         $builders->each(
             function (AppBuilder $builder) use ($io, $output, &$sections) {
@@ -110,6 +112,11 @@ class DoBuildsCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 'Force the build and storage even if it already exists'
+            )->addOption(
+                'local',
+                null,
+                null,
+                'Build and store in local repo'
             );
     }
 
