@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace SlartyBartfast\Services;
@@ -66,11 +67,13 @@ class BuildDeployer
                 'Deployment location does not exist, creating: ' .
                 $this->application->getDeployLocation()
             );
-            if (!mkdir(
-                $concurrentDirectory = $this->application->getDeployLocation(),
-                0755,
-                true
-                ) && !is_dir($concurrentDirectory)) {
+            if (
+                !mkdir(
+                    $concurrentDirectory = $this->application->getDeployLocation(),
+                    0755,
+                    true
+                ) && !is_dir($concurrentDirectory)
+            ) {
                 throw new \RuntimeException(
                     sprintf('Directory "%s" was not created', $concurrentDirectory)
                 );
@@ -81,7 +84,7 @@ class BuildDeployer
         // download it
         chdir($this->application->getDeployLocation());
         $output->writeln('Changed directory to (deploy location): ' . getcwd());
-        $file = fopen($namer->getArtifactName(), 'wb');
+        $file       = fopen($namer->getArtifactName(), 'wb');
         $readStream = $this->filesystem->read($namer->getArtifactName());
         fwrite($file, $readStream['contents']);
         fclose($file);

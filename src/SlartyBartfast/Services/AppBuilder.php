@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace SlartyBartfast\Services;
@@ -81,8 +82,8 @@ class AppBuilder
         if ($exitCode !== 0) {
             $io->error(
                 [
-                    'BUILD FAILURE ON '. $this->getApplicationName(),
-                    'Build exited with code ' . $exitCode
+                    'BUILD FAILURE ON ' . $this->getApplicationName(),
+                    'Build exited with code ' . $exitCode,
                 ]
             );
             chdir($currentDirectory);

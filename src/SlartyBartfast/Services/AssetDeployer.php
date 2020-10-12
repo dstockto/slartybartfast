@@ -59,11 +59,13 @@ class AssetDeployer
                 'Deployment location does not exist, creating: ' .
                 $this->asset->getDeployLocation()
             );
-            if (!mkdir(
+            if (
+                !mkdir(
                     $concurrentDirectory = $this->asset->getDeployLocation(),
                     0755,
                     true
-                ) && !is_dir($concurrentDirectory)) {
+                ) && !is_dir($concurrentDirectory)
+            ) {
                 throw new RuntimeException(
                     sprintf('Directory "%s" was not created', $concurrentDirectory)
                 );

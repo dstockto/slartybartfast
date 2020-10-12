@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace SlartyBartfast;
@@ -17,7 +18,7 @@ class ArtifactNamesCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output);
+        $io                = new SymfonyStyle($input, $output);
         $applicationConfig = new ArtifactConfig($input->getOption('config'));
 
         // Get application list (filtered)
@@ -36,8 +37,8 @@ class ArtifactNamesCommand extends Command
                     $app,
                     (new DirectoryHasher(
                         $app->getRoot(),
-                        $app->getDirectories())
-                    )->getHash()
+                        $app->getDirectories()
+                    ))->getHash()
                 );
             }
         );
@@ -78,5 +79,4 @@ class ArtifactNamesCommand extends Command
                 'Limit to only some applications'
             );
     }
-
 }
