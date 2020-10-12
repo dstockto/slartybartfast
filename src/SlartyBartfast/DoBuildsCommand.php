@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace SlartyBartfast;
@@ -119,5 +120,4 @@ class DoBuildsCommand extends Command
                 'Build and store in local repo'
             );
     }
-
 }

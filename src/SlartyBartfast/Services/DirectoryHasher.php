@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace SlartyBartfast\Services;
 
 class DirectoryHasher
 {
-    const EMPTY_HASH = 'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391';
+    public const EMPTY_HASH = 'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391';
 
     private $root;
     private $directories = [];

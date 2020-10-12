@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace SlartyBartfast\Services;
@@ -10,10 +11,7 @@ class FlySystemS3Factory
 {
     public static function build(array $options): AwsS3Adapter
     {
-        if (!isset(
-            $options['bucket-name'],
-            $options['region']
-        )) {
+        if (!isset($options['bucket-name'], $options['region'])) {
             throw new \RuntimeException(
                 'Missing required S3 configuration keys: bucket-name or region'
             );
@@ -32,5 +30,5 @@ class FlySystemS3Factory
 
         // TODO: Not 5.5 compatible
         return new AwsS3Adapter($client, $options['bucket-name'], $options['path-prefix'] ?? '');
-     }
+    }
 }

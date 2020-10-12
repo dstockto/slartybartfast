@@ -2,7 +2,6 @@
 
 namespace SlartyBartfast;
 
-
 use SlartyBartfast\Model\ApplicationModel;
 use SlartyBartfast\Services\ArtifactConfig;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;

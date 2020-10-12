@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace SlartyBartfast\Services;
@@ -36,12 +37,13 @@ class ArtifactNamer
     public function getArtifactName(): string
     {
         return strtolower(
-            implode('',
+            implode(
+                '',
                 [
                     $this->application->getArtifactPrefix(),
                     '-',
                     $this->hash,
-                    '.tar.gz'
+                    '.tar.gz',
                 ]
             )
         );

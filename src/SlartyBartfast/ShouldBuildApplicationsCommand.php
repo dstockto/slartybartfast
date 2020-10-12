@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace SlartyBartfast;
@@ -81,5 +82,4 @@ class ShouldBuildApplicationsCommand extends Command
                 'Determine build status using local artifact repo'
             );
     }
-
 }
