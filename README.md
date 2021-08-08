@@ -8,7 +8,7 @@ An artifact is the result of a code change - meaning it could be a compiled exec
 
 ## What is an asset?
 
-An asset is something your application needs in order to run, but it is not the result of your own code. It could be a third party library or other code or files that ideally don't change all that often. An example might be a version of the ExtJS framework. The application needs it to function, but it doesn't work with a normal package manager like npm or yarn. Slart Bartfast allows these to be stored in the repository as a tar.gz file and then retrieved and deployed via the `slarty deploy-assets` command.
+An asset is something your application needs in order to run, but it is not the result of your own code. It could be a third party library or other code or files that ideally don't change all that often. An example might be a version of the ExtJS framework. The application needs it to function, but it doesn't work with a normal package manager like npm or yarn. Slarty Bartfast allows these to be stored in the repository as a tar.gz file and then retrieved and deployed via the `slarty deploy-assets` command.
 
 ## Why was Slarty Bartfast created?
 
@@ -24,7 +24,7 @@ By condensing the contents of a directory or directories down to a single unique
 
 Additionally, Slarty Bartfast can download and deploy those artifacts. Currently deployment is literally downloading and unzipping to the configured location. This download and unzipping process is very fast and saves a ton of time over building on the web server. It also means we don't need npm or node on the web server.
 
-To summarize, Slart Bartfast allows for repeatable, predictable deploys and eliminates the need to rebuild artifacts that have been built already. 
+To summarize, Slarty Bartfast allows for repeatable, predictable deploys and eliminates the need to rebuild artifacts that have been built already. 
 
 # Configuration
 
