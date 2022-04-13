@@ -3,13 +3,14 @@
 namespace spec\SlartyBartfast\Services;
 
 use League\Flysystem\AdapterInterface;
+use League\Flysystem\FilesystemAdapter;
 use PhpSpec\ObjectBehavior;
 use SlartyBartfast\Model\ApplicationModel;
 use SlartyBartfast\Services\BuildFinder;
 
 class BuildFinderSpec extends ObjectBehavior
 {
-    public function let(ApplicationModel $applicationModel, AdapterInterface $fileSystem): void
+    public function let(ApplicationModel $applicationModel, FilesystemAdapter $fileSystem): void
     {
         $this->beConstructedWith($applicationModel, $fileSystem);
     }

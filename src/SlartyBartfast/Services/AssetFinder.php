@@ -5,23 +5,13 @@ declare(strict_types=1);
 namespace SlartyBartfast\Services;
 
 use League\Flysystem\AdapterInterface;
+use League\Flysystem\FilesystemAdapter;
 use SlartyBartfast\Model\AssetModel;
 
 class AssetFinder
 {
-    /**
-     * @var AssetModel
-     */
-    private $assetModel;
-    /**
-     * @var AdapterInterface
-     */
-    private $fileSystem;
-
-    public function __construct(AssetModel $assetModel, AdapterInterface $fileSystem)
+    public function __construct(private AssetModel $assetModel, private FilesystemAdapter $fileSystem)
     {
-        $this->assetModel = $assetModel;
-        $this->fileSystem = $fileSystem;
     }
 
     public function assetExists(): bool

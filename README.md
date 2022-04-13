@@ -1,4 +1,4 @@
-# Slarty Bartfast V1.0
+# Slarty Bartfast V2.0
 
 Slarty Bartfast is an artifact manager to help simplify build and deploy processes dealing with "artifacts" and "assets".
 
