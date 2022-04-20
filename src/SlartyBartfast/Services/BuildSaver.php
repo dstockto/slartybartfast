@@ -6,24 +6,14 @@ namespace SlartyBartfast\Services;
 
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
+use League\Flysystem\FilesystemAdapter;
 use SlartyBartfast\Model\ApplicationModel;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class BuildSaver
 {
-    /**
-     * @var ApplicationModel
-     */
-    private $application;
-    /**
-     * @var AdapterInterface
-     */
-    private $filesystem;
-
-    public function __construct(ApplicationModel $application, AdapterInterface $filesystem)
+    public function __construct(private ApplicationModel $application, private FilesystemAdapter $filesystem)
     {
-        $this->application = $application;
-        $this->filesystem  = $filesystem;
     }
 
     public function saveBuild(OutputInterface $output): void

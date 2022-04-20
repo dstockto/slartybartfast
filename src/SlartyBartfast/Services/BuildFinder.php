@@ -5,23 +5,13 @@ declare(strict_types=1);
 namespace SlartyBartfast\Services;
 
 use League\Flysystem\AdapterInterface;
+use League\Flysystem\FilesystemAdapter;
 use SlartyBartfast\Model\ApplicationModel;
 
 class BuildFinder
 {
-    /**
-     * @var ApplicationModel
-     */
-    private $applicationModel;
-    /**
-     * @var AdapterInterface
-     */
-    private $fileSystem;
-
-    public function __construct(ApplicationModel $applicationModel, AdapterInterface $fileSystem)
+    public function __construct(private ApplicationModel $applicationModel, private FilesystemAdapter $fileSystem)
     {
-        $this->applicationModel = $applicationModel;
-        $this->fileSystem       = $fileSystem;
     }
 
     public function isBuildNeeded(): bool

@@ -3,31 +3,15 @@
 namespace SlartyBartfast\Services;
 
 use League\Flysystem\AdapterInterface;
+use League\Flysystem\FilesystemAdapter;
 use RuntimeException;
 use SlartyBartfast\Model\AssetModel;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class AssetDeployer
 {
-    /**
-     * @var AssetModel
-     */
-    private $asset;
-    /**
-     * @var AdapterInterface
-     */
-    private $filesystem;
-
-    /**
-     * AssetDeployer constructor.
-     *
-     * @param AssetModel       $asset
-     * @param AdapterInterface $filesystem
-     */
-    public function __construct(AssetModel $asset, AdapterInterface $filesystem)
+    public function __construct(private AssetModel $asset, private FilesystemAdapter $filesystem)
     {
-        $this->asset      = $asset;
-        $this->filesystem = $filesystem;
     }
 
     public function deploy(OutputInterface $output): void

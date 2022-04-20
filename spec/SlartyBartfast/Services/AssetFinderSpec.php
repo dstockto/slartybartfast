@@ -2,14 +2,14 @@
 
 namespace spec\SlartyBartfast\Services;
 
-use League\Flysystem\AdapterInterface;
+use League\Flysystem\FilesystemAdapter;
 use PhpSpec\ObjectBehavior;
 use SlartyBartfast\Model\AssetModel;
 use SlartyBartfast\Services\AssetFinder;
 
 class AssetFinderSpec extends ObjectBehavior
 {
-    public function let(AssetModel $assetModel, AdapterInterface $fileSystem): void
+    public function let(AssetModel $assetModel, FilesystemAdapter $fileSystem): void
     {
         $this->beConstructedWith($assetModel, $fileSystem);
     }

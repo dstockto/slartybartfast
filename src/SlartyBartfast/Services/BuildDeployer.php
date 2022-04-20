@@ -5,30 +5,15 @@ declare(strict_types=1);
 namespace SlartyBartfast\Services;
 
 use League\Flysystem\AdapterInterface;
+use League\Flysystem\FilesystemAdapter;
+use RuntimeException;
 use SlartyBartfast\Model\ApplicationModel;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class BuildDeployer
 {
-    /**
-     * @var ApplicationModel
-     */
-    private $application;
-    /**
-     * @var AdapterInterface
-     */
-    private $filesystem;
-
-    /**
-     * BuildDeployer constructor.
-     *
-     * @param ApplicationModel $application
-     * @param AdapterInterface $filesystem
-     */
-    public function __construct(ApplicationModel $application, AdapterInterface $filesystem)
+    public function __construct(private ApplicationModel $application, private FilesystemAdapter $filesystem)
     {
-        $this->application = $application;
-        $this->filesystem  = $filesystem;
     }
 
     public function deploy(OutputInterface $output): void
@@ -57,7 +42,7 @@ class BuildDeployer
         if ($finder->isBuildNeeded()) {
             $output->writeln('Build is not found. Switching directory back to ' . $currentDir);
             chdir($currentDir);
-            throw new \RuntimeException('Missing build ' . $namer->getArtifactName());
+            throw new RuntimeException('Missing build ' . $namer->getArtifactName());
         }
 
         $output->writeln('Found artifact ' . $namer . ' for ' . $this->application->getName());
@@ -74,7 +59,7 @@ class BuildDeployer
                     true
                 ) && !is_dir($concurrentDirectory)
             ) {
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     sprintf('Directory "%s" was not created', $concurrentDirectory)
                 );
             }
