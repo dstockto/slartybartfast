@@ -11,11 +11,11 @@ use SlartyBartfast\Model\AssetModel;
 
 class ArtifactConfig
 {
-    private array      $configuration;
-    private string     $configPath;
+    private array $configuration;
+    private string $configPath;
     private Collection $applicationModels;
     private Collection $assetModels;
-    private bool       $localOverride = false;
+    private bool $localOverride = false;
 
     public function __construct(string $configPath)
     {
