@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace SlartyBartfast\Services;
 
 use Aws\S3\S3Client;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
 
 class FlySystemS3Factory
 {
-    public static function build(array $options): AwsS3Adapter
+    public static function build(array $options): AwsS3V3Adapter
     {
         if (!isset($options['bucket-name'], $options['region'])) {
             throw new \RuntimeException(
@@ -28,7 +28,6 @@ class FlySystemS3Factory
 
         $client = new S3Client($clientOptions);
 
-        // TODO: Not 5.5 compatible
-        return new AwsS3Adapter($client, $options['bucket-name'], $options['path-prefix'] ?? '');
+        return new AwsS3V3Adapter($client, $options['bucket-name'], $options['path-prefix'] ?? "");
     }
 }

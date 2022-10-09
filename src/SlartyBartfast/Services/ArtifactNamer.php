@@ -8,32 +8,15 @@ use SlartyBartfast\Model\ApplicationModel;
 
 class ArtifactNamer
 {
-    private $hash;
-    private $application;
-
-    /**
-     * ArtifactNamer constructor.
-     *
-     * @param ApplicationModel $applicationModel
-     * @param string           $hash
-     */
-    public function __construct(ApplicationModel $applicationModel, string $hash)
+    public function __construct(private ApplicationModel $application, private string $hash)
     {
-        $this->application = $applicationModel;
-        $this->hash        = $hash;
     }
 
-    /**
-     * @return string
-     */
     public function getApplicationName(): string
     {
         return $this->application->getName();
     }
 
-    /**
-     * @return string
-     */
     public function getArtifactName(): string
     {
         return strtolower(
@@ -49,10 +32,7 @@ class ArtifactNamer
         );
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getArtifactName();
     }

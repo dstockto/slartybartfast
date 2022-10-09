@@ -10,8 +10,10 @@ use SlartyBartfast\Model\ApplicationModel;
 
 class BuildFinder
 {
-    public function __construct(private ApplicationModel $applicationModel, private FilesystemAdapter $fileSystem)
-    {
+    public function __construct(
+        private readonly ApplicationModel $applicationModel,
+        private readonly FilesystemAdapter $fileSystem
+    ) {
     }
 
     public function isBuildNeeded(): bool
@@ -22,6 +24,6 @@ class BuildFinder
         );
         $namer  = new ArtifactNamer($this->applicationModel, $hasher->getHash());
 
-        return !$this->fileSystem->has($namer->getArtifactName());
+        return !$this->fileSystem->fileExists($namer->getArtifactName());
     }
 }

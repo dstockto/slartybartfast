@@ -59,6 +59,6 @@ $commandLoader = new FactoryCommandLoader(
     ]
 );
 
-$app = new Application('Slarty Bartfast - PHP 7.2+ Edition', 'v1.0.0');
+$app = new Application('Slarty Bartfast - PHP 8.1+ Edition', 'v3.0.0');
 $app->setCommandLoader($commandLoader);
 $app->run();

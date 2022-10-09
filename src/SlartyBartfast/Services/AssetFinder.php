@@ -10,12 +10,12 @@ use SlartyBartfast\Model\AssetModel;
 
 class AssetFinder
 {
-    public function __construct(private AssetModel $assetModel, private FilesystemAdapter $fileSystem)
+    public function __construct(private readonly AssetModel $assetModel, private readonly FilesystemAdapter $fileSystem)
     {
     }
 
     public function assetExists(): bool
     {
-        return $this->fileSystem->has($this->assetModel->getFilename());
+        return $this->fileSystem->fileExists($this->assetModel->getFilename());
     }
 }

@@ -11,22 +11,12 @@ use SlartyBartfast\Model\AssetModel;
 
 class ArtifactConfig
 {
-    /** @var array */
-    private $configuration;
-    /** @var string */
-    private $configPath;
-    /** @var Collection */
-    private $applicationModels;
-    /** @var Collection */
-    private $assetModels;
-    /** @var bool */
-    private $localOverride = false;
+    private array $configuration;
+    private string $configPath;
+    private Collection $applicationModels;
+    private Collection $assetModels;
+    private bool $localOverride = false;
 
-    /**
-     * ArtifactConfig constructor.
-     *
-     * @param string $configPath
-     */
     public function __construct(string $configPath)
     {
         $this->configPath = $configPath;
@@ -46,7 +36,7 @@ class ArtifactConfig
 
     private function loadConfig(): void
     {
-        $json = file_get_contents($this->configPath);
+        $json          = file_get_contents($this->configPath);
         $configuration = json_decode($json, true);
 
         if ($configuration === null) {
@@ -101,9 +91,7 @@ class ArtifactConfig
     {
         $root = $this->configuration['root_directory'];
 
-        $artifacts = collect($this->configuration['artifacts']);
-
-        $this->applicationModels = $artifacts->map(
+        $this->applicationModels = collect($this->configuration['artifacts'])->map(
             function ($applicationConfig) use ($root) {
                 return new ApplicationModel(
                     $applicationConfig['root'] ?? $root,
@@ -126,9 +114,7 @@ class ArtifactConfig
             $this->assetModels = collect();
             return;
         }
-        $assets = collect($this->configuration['assets']);
-
-        $this->assetModels = $assets->map(
+        $this->assetModels = collect($this->configuration['assets'])->map(
             function ($assetConfig) use ($root) {
                 return new AssetModel(
                     $assetConfig['name'],

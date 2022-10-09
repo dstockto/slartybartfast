@@ -22,5 +22,6 @@ class TimeCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->greetUser($input, $output);
+        return 0;
     }
 }
