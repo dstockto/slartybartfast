@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AssetDeployer
 {
-    public function __construct(private AssetModel $asset, private FilesystemAdapter $filesystem)
+    public function __construct(private readonly AssetModel $asset, private readonly FilesystemAdapter $filesystem)
     {
     }
 

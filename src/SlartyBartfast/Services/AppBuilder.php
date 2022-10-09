@@ -13,9 +13,9 @@ class AppBuilder
     private ?bool $shouldBuild = null;
 
     public function __construct(
-        private ApplicationModel $application,
-        private FilesystemAdapter $filesystem,
-        private bool $force
+        private readonly ApplicationModel $application,
+        private readonly FilesystemAdapter $filesystem,
+        private readonly bool $force
     ) {
     }
 

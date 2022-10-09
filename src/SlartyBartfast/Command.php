@@ -30,14 +30,14 @@ class Command extends SymfonyCommand
         );
     }
 
-    private function getGreeting()
+    private function getGreeting(): string
     {
         $time = date('H');
         if ($time < 12) {
             return 'Good morning';
         }
 
-        if ($time >= 12 && $time < 17) {
+        if ($time < 17) {
             return 'Good afternoon';
         }
 

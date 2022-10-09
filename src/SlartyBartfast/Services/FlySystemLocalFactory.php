@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace SlartyBartfast\Services;
 
-use League\Flysystem\Adapter\Local;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 
 class FlySystemLocalFactory
 {
-    public static function build(array $options): Local
+    public static function build(array $options): LocalFilesystemAdapter
     {
         if (!array_key_exists('root', $options)) {
             throw new \RuntimeException('Local filesystem requested without providing root');
         }
 
-        return new Local($options['root']);
+        return new LocalFilesystemAdapter($options['root']);
     }
 }

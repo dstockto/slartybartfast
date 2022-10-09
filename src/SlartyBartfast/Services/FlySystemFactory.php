@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace SlartyBartfast\Services;
 
 use League\Flysystem\AdapterInterface;
+use League\Flysystem\FilesystemAdapter;
 
 class FlySystemFactory
 {
-    public static function getAdapter(array $configuration): AdapterInterface
+    public static function getAdapter(array $configuration): FilesystemAdapter
     {
         if (!array_key_exists('adapter', $configuration)) {
             throw new \RuntimeException(

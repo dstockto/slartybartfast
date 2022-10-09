@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SlartyBartfast\Services;
 
-use League\Flysystem\AdapterInterface;
 use League\Flysystem\FilesystemAdapter;
 use RuntimeException;
 use SlartyBartfast\Model\ApplicationModel;
@@ -12,8 +11,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class BuildDeployer
 {
-    public function __construct(private ApplicationModel $application, private FilesystemAdapter $filesystem)
-    {
+    public function __construct(
+        private readonly ApplicationModel $application,
+        private readonly FilesystemAdapter $filesystem
+    ) {
     }
 
     public function deploy(OutputInterface $output): void
@@ -69,9 +70,9 @@ class BuildDeployer
         // download it
         chdir($this->application->getDeployLocation());
         $output->writeln('Changed directory to (deploy location): ' . getcwd());
-        $file       = fopen($namer->getArtifactName(), 'wb');
+        $file = fopen($namer->getArtifactName(), 'wb');
         $readStream = $this->filesystem->read($namer->getArtifactName());
-        fwrite($file, $readStream['contents']);
+        fwrite($file, $readStream);
         fclose($file);
 
         $output->writeln([' - Downloaded artifact']);

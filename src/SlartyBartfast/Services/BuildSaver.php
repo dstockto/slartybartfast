@@ -12,8 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class BuildSaver
 {
-    public function __construct(private ApplicationModel $application, private FilesystemAdapter $filesystem)
-    {
+    public function __construct(
+        private readonly ApplicationModel $application,
+        private readonly FilesystemAdapter $filesystem
+    ) {
     }
 
     public function saveBuild(OutputInterface $output): void
