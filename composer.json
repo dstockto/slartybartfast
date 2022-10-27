@@ -22,7 +22,7 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "^7.2|^8.0",
+        "php": "^7.4|^8.0",
         "symfony/console": "^5",
         "tightenco/collect": "^v8",
         "league/flysystem": "^1.0",
