@@ -4,7 +4,7 @@ Slarty Bartfast is an artifact manager to help simplify build and deploy process
 
 ## What is an Artifact?
 
-An artifact is the result of a code change - meaning it could be a compiled executable, a zip file containing transpiled javascript or even just the contents of a project directory if that's what is needed to allow the application to run on a server. In short, an artifact ultimate ends of being a zip file containing code or binaries or a combination of those which can be used whenever we'd otherwise need to build an application.
+An artifact is the result of a code change - meaning it could be a compiled executable, a zip file containing transpiled javascript or even just the contents of a project directory if that's what is needed to allow the application to run on a server. In short, an artifact ultimately ends up being a zip file containing code or binaries or a combination of those which can be used whenever we'd otherwise need to build an application.
 
 ## What is an asset?
 
@@ -260,7 +260,7 @@ The `deploy-assets` command will create the output directory path if it does not
 
 ## Why Slarty Bartfast?
 
-The name of Slarty Bartfast comes from a character from The Hitchhiker's Guide to the Galaxy (HHGTTG). In the book, Slartibartfast works for works on the planet Magrathea, as a designer of custom planets. His favorite part of the job is designing coastlines and he won an award for the fjords in Norway. For Slartibartfast, planets are artifacts.
+The name of Slarty Bartfast comes from a character from The Hitchhiker's Guide to the Galaxy (HHGTTG). In the book, Slartibartfast works on the planet Magrathea, as a designer of custom planets. His favorite part of the job is designing coastlines and he won an award for the fjords in Norway. For Slartibartfast, planets are artifacts.
 
 The name of the program went through a couple of ideas. The first two were "Artificer" and "Artifactory" but it turns out both of those are things that exist. Next was Slartibartifact which is fun to say but less fun to type as a command. Eventually I came back to "Slarty Bartfast" because of misremembering how to spell "Slartibartfast", but now it's totally on purpose because "./slarty" is simple enough and if this gets released, maybe searching for "Slarty Bartfast" will eventually get you to this program.
 

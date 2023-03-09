@@ -25,7 +25,7 @@ buildDir:
 	mkdir -p build
 
 aMess: buildDir messBuild
-	echo '<?php while($$i < 100000) { echo time(); $$i++; }' > build/time.php
+	echo '<?php $$i = 0; while($$i < 100000) { echo time(); $$i++; }' > build/time.php
 	php build/time.php > build/timeoutput.txt
 	zip -r build/mess/StupidTime.zip build/timeoutput.txt build/time.php
 	rm build/timeoutput.txt build/time.php
