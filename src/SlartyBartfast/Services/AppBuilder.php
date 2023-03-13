@@ -46,9 +46,9 @@ class AppBuilder
         );
 
         $command = $this->application->getBuildCommand();
-        
+
         if (!is_dir($this->application->getOutputDirectory())) {
-           $io->error(
+            $io->error(
                 [
                     'BUILD FAILURE ON ' . $this->getApplicationName(),
                     'Build directory does not exist ',
