@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SlartyBartfast\Services;
 
+use Illuminate\Support\Collection;
 use RuntimeException;
 use SlartyBartfast\Model\ApplicationModel;
-use Tightenco\Collect\Support\Collection;
 use SlartyBartfast\Model\AssetModel;
 
 class ArtifactConfig
