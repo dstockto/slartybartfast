@@ -22,9 +22,9 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "^8.0|^8.1",
+        "php": "^8.0|^8.1|^8.2",
         "symfony/console": "^6",
-        "illuminate/collections": "^v9.0.0",
+        "illuminate/collections": "^v9.0.0|^v10.0.0",
         "league/flysystem": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.0"
     },
